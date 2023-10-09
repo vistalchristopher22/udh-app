@@ -5,6 +5,11 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 @endprepend
 @section('content')
     @include('includes.success')
@@ -77,8 +82,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="btnCloseAddProcessModal">Close</button>
-                    <button type="button" class="btn btn-primary" id="btnSaveProcess">Save Process</button>
+                    <button type="button" class="btn btn-soft-secondary" id="btnCloseAddProcessModal">Close</button>
+                    <button type="button" class="btn btn-soft-primary" id="btnSaveProcess">Save Process</button>
                 </div>
             </div>
         </div>
@@ -152,8 +157,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="btnCloseAddProcessModal">Close</button>
-                    <button type="button" class="btn btn-primary" id="btnEditSaveProcess">Save Process</button>
+                    <button type="button" class="btn btn-soft-secondary" id="btnEditCloseModal">Close</button>
+                    <button type="button" class="btn btn-soft-success" id="btnEditSaveProcess">Save Process</button>
                 </div>
             </div>
         </div>
@@ -191,8 +196,13 @@
                             <div class="activity-info-text">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h6 class="m-0">{{ $instruction?->office?->name }}</h6>
-                                    <button class="btn btn-soft-success btn-edit-process"
-                                        data-id="{{ $instruction->id }}">Edit</button>
+                                    <div>
+                                        <button class="btn btn-soft-success btn-edit-process"
+                                            data-id="{{ $instruction->id }}">Edit</button>
+
+                                        <button class="btn btn-soft-danger btn-delete-process"
+                                            data-id="{{ $instruction->id }}">Delete</button>
+                                    </div>
                                 </div>
                                 <p class="mt-3 text-dark">
                                     <span class="text-dark">
@@ -222,7 +232,7 @@
                                         <span class="fw-bold">{{ $instruction?->office?->telephone_number }}</span>
                                     </span>
                                     <br>
-                                    <span class="text-dark">Email : 
+                                    <span class="text-dark">Email :
                                         <span class="fw-bold">{{ $instruction?->office?->email }}</span>
                                     </span>
                                     <br>
@@ -265,9 +275,9 @@
 
             document.querySelector('#btnAddNewProcess').addEventListener('click', () => newProcessModalInstance.show());
             document.querySelector('#btnCloseAddProcessModal').addEventListener('click', () => newProcessModalInstance.hide());
+
             document.addEventListener('click', (e) => {
                 let target = e.target;
-
                 if (target.classList.contains('btn-edit-process')) {
                     let keyId = target.dataset.id;
                     setServiceIdState(target.dataset.id);
@@ -286,9 +296,36 @@
                             document.querySelector('#editSecretary').value = data.secretary;
                             editProcessModalInstance.show();
                         });
+                } else if (target.classList.contains('btn-delete-process')) {
+                    setServiceIdState(target.dataset.id);
+                    alertify.confirm("Are you sure you want to remove/delete this process?",
+                        () => {
+                            fetch(`/document-process/${getServiceIdState()}/delete`, {
+                                    headers: {
+                                        'Accept': 'application/json',
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')
+                                            .getAttribute(
+                                                'content')
+                                    },
+                                    method: "DELETE",
+                                })
+                                .then((res) => {
+                                    return res.json();
+                                })
+                                .then((data) => {
+                                    alert(JSON.stringify(data))
+                                });
+                        }).set({
+                        title: 'Confirmation Dialog'
+                    }).set('labels', {
+                        ok: 'Yes',
+                        cancel: 'No'
+                    });;
                 }
-
             });
+
+            document.querySelector('#btnEditCloseModal').addEventListener('click', () => editProcessModalInstance.hide());
 
             new Choices(document.querySelector('#office'), {
                 allowHTML: false,

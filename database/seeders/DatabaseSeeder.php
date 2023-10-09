@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Category;
 use App\Models\Document;
 use App\Models\Office;
 use App\Models\Position;
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
     {
         Office::factory(1)->create();
         Position::factory(1)->create();
+        Category::factory(50)->create();
 
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
@@ -53,6 +55,6 @@ class DatabaseSeeder extends Seeder
         $user->assignRole($role);
 
         User::factory(1)->create();
-        //        Document::factory(50)->create();
+        // Document::factory(50)->create();
     }
 }

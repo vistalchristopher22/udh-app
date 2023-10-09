@@ -24,13 +24,13 @@ final class DocumentServiceProcessController extends Controller
     public function store(Request $request)
     {
         ServiceProcess::create([
-            'document_id'                => $request->documentId,
-            'office_id'                  => $request->office,
-            'description'                => $request->description,
-            'look_for'                   => $request->lookFor,
-            'secretary'                  => $request->secretary,
-            'estimated_days_to_process'  => $request->estimatedDurationDays ?? 0,
-            'estimated_duration_hours'   => $request->estimatedDurationHours ?? 0,
+            'document_id' => $request->documentId,
+            'office_id' => $request->office,
+            'description' => $request->description,
+            'look_for' => $request->lookFor,
+            'secretary' => $request->secretary,
+            'estimated_days_to_process' => $request->estimatedDurationDays ?? 0,
+            'estimated_duration_hours' => $request->estimatedDurationHours ?? 0,
             'estimated_duration_minutes' => $request->estimatedDurationMinutes ?? 0,
         ]);
 
@@ -46,9 +46,9 @@ final class DocumentServiceProcessController extends Controller
         $serviceCoordinates = DocumentProcessService::getProcessCoordinates($document);
 
         return view('document.service.create', [
-            'document'           => $document,
-            'offices'            => $this->officeRepository->get(),
-            'employees'          => $this->employeeRepository->get(),
+            'document' => $document,
+            'offices' => $this->officeRepository->get(),
+            'employees' => $this->employeeRepository->get(),
             'serviceCoordinates' => $serviceCoordinates,
         ]);
     }
@@ -73,4 +73,10 @@ final class DocumentServiceProcessController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function destroy(int $id)
+    {
+        $service = ServiceProcess::destroy($id);
+
+        return response()->json(['success' => $service]);
+    }
 }
