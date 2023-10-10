@@ -58,3 +58,8 @@ Route::post('category', function () {
     }
     return response()->json($category);
 });
+
+Route::delete('category', function () {
+    Category::find(request()->id)->delete();
+    return response()->json(['success' => true]);
+});
