@@ -2,9 +2,9 @@
 @section('page-title', '')
 @section('content')
     @include('includes.success')
-    <div class="card">
-        <div class="card-header bg-dark d-flex justify-content-between align-items-center">
-            <div class="card-title text-white">
+    <div class="card rounded-0 shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="card-title">
                 Edit Position
             </div>
         </div>

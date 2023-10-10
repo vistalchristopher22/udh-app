@@ -10,4 +10,9 @@ class Category extends Model
 {
     use HasFactory, SoftDeletes;
     protected $guarded = [];
+
+    public function getCreatedAtAttribute($value)
+    {
+        return date('F d, Y h:i A', strtotime($value));
+    }
 }

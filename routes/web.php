@@ -8,6 +8,7 @@ use App\Http\Controllers\FileManagerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Auth;
@@ -39,4 +40,5 @@ Route::resources([
     'file-manager' => FileManagerController::class,
     'tags' => TagController::class,
     'categories' => CategoryController::class,
+    'profile' => ProfileController::class,
 ]);

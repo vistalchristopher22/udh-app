@@ -7,9 +7,9 @@
 @endprepend
 @section('content')
     @include('includes.success')
-    <div class="card">
-        <div class="card-header bg-dark d-flex justify-content-between align-items-center">
-            <div class="card-title text-white">
+    <div class="card shadow-sm rounded-0">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="card-title">
                 Edit Office
             </div>
         </div>

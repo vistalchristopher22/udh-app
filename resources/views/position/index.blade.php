@@ -7,12 +7,12 @@
 @endprepend
 @section('content')
     @include('includes.success')
-    <div class="card">
-        <div class="card-header bg-dark d-flex justify-content-between align-items-center">
-            <div class="card-title text-white">
-                Complete listing <span class="text-lowercase">of</span> position
+    <div class="card rounded-0 shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="card-title ">
+                Complete listing <span class="text-lowercase">of</span> <span class="fw-bold">position</span>
             </div>
-            <a href="{{ route('position.create') }}" class="btn btn-light shadow-lg fw-medium">
+            <a href="{{ route('position.create') }}" class="btn btn-soft-primary fw-medium">
                 Add New Position
             </a>
         </div>

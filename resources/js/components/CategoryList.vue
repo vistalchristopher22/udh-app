@@ -4,7 +4,7 @@
     <CategoryModal :isEditing="isEditing" :isDisplay="isDisplay" :category="category" @save="saveCategory"
       @close="isDisplay = !isDisplay" ref="categoryModal" />
 
-    <div class="card rounded-0">
+    <div class="card rounded-0 shadow-sm">
       <div class="card-header d-flex align-items-center justify-content-between bg-white">
         <div class="card-title h6h">Complete listing <span class="text-lowercase">of</span> <span
             class="fw-bold">Categories</span></div>
@@ -20,6 +20,7 @@
               <th class="text-center h6 p-2" style="width : 12%;">Name</th>
               <th class="text-center h6 p-2" style="width : 70%;">Description</th>
               <th class="text-center h6 p-2">Slug</th>
+              <th class="text-center h6 p-2">Created At</th>
               <th class="text-center h6 p-2">Actions</th>
             </tr>
           </thead>
@@ -32,6 +33,7 @@
               </td>
               <td>{{ category.description }}</td>
               <td class="text-center">{{ category.slug }}</td>
+              <td class="text-center text-truncate">{{ category.created_at }}</td>
               <td class="text-truncate text-center">
                 <button class="btn btn-soft-success mx-2" @click="editCategory(category.id)">Edit</button>
                 <button class="btn btn-soft-danger" @click="deleteCategory(category.id)">Delete</button>
@@ -135,7 +137,6 @@ export default {
     const deleteCategory = (id) => {
       alertify.confirm("Are you sure you want to delete this record?",
         () => {
-          // ajax request
           axios.delete(`/api/category`, {
             method: 'DELETE',
             data: {

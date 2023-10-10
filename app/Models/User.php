@@ -13,7 +13,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, HasRoles, Notifiable;
 
-    public $with = ['information'];
+    public $with = ['information', 'information.office_detail', 'information.position_detail'];
 
     /**
      * The attributes that are mass assignable.

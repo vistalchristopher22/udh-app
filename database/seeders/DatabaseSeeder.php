@@ -3,14 +3,15 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Tag;
+use App\Models\User;
+use App\Models\Office;
 use App\Models\Category;
 use App\Models\Document;
-use App\Models\Office;
 use App\Models\Position;
-use App\Models\User;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\PermissionRegistrar;
 
 class DatabaseSeeder extends Seeder
@@ -23,6 +24,7 @@ class DatabaseSeeder extends Seeder
         Office::factory(1)->create();
         Position::factory(1)->create();
         Category::factory(50)->create();
+        Tag::factory(50)->create();
 
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 

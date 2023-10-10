@@ -7,12 +7,12 @@
 @endprepend
 @section('content')
     @include('includes.success')
-    <div class="card">
-        <div class="card-header bg-dark d-flex justify-content-between align-items-center">
-            <div class="card-title text-white">
-                Complete listing <span class="text-lowercase">of</span> office
+    <div class="card shadow-sm rounded-0">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="card-title">
+                Complete listing <span class="text-lowercase">of</span> <span class="fw-bold">office</span>
             </div>
-            <a href="{{ route('office.create') }}" class="btn btn-light shadow-lg fw-medium">
+            <a href="{{ route('office.create') }}" class="btn btn-soft-primary fw-medium">
                 Add New Office
             </a>
         </div>

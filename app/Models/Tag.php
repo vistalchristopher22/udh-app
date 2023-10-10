@@ -15,4 +15,10 @@ class Tag extends Model
     {
         return $this->belongsToMany(Document::class);
     }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return date('F d, Y h:i A', strtotime($value));
+    }
+
 }
