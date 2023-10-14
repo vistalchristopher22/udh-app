@@ -20,11 +20,6 @@ class EmployeeController extends Controller
     {
         $this->officeRepository = app()->make(OfficeRepository::class);
         $this->positionRepository = app()->make(PositionRepository::class);
-        $this->middleware(['permission:view employees'])->only('index');
-        $this->middleware(['permission:edit employee'])->only('edit');
-        $this->middleware(['permission:edit employee'])->only('update');
-        $this->middleware(['permission:create employee'])->only('create');
-        $this->middleware(['permission:create employee'])->only('store');
     }
 
     public function index()

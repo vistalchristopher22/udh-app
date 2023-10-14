@@ -7,6 +7,7 @@ import FileManager from './components/FileManager.vue'
 import Tags from './components/Tags.vue'
 import Categories from './components/CategoryList.vue'
 import UserProfile from './components/UserProfile.vue'
+import { autoAnimatePlugin } from "@formkit/auto-animate/vue"
 import 'notyf/notyf.min.css'; 
 
 
@@ -17,6 +18,7 @@ const app = createApp({});
 app.use(vue3GoogleLogin, {
     clientId: CLIENT_ID,
 });
+app.use(autoAnimatePlugin);
 
 
 app.component('Login', Login);

@@ -20,9 +20,6 @@
                         alt=""
                         height="110"
                         class="rounded-circle">
-                      <span class="dastone-profile_main-pic-change">
-                        <i class="fas fa-camera"></i>
-                      </span>
                     </div>
                     <div class="dastone-profile_user-detail">
                       <h5 class="dastone-user-name">{{ information?.first_name || ''}} {{ information?.last_name || '' }}</h5>

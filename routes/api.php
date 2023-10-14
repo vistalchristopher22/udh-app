@@ -2,9 +2,13 @@
 
 use App\Models\Tag;
 use App\Models\User;
+use App\Models\Office;
 use App\Models\Category;
 use App\Models\Document;
+use App\Models\Employee;
+use App\Models\Position;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Permission;
@@ -94,3 +98,47 @@ Route::delete('category', function () {
     Category::find(request()->id)->delete();
     return response()->json(['success' => true]);
 });
+
+
+Route::get('offices', function () {
+    return Office::get();
+});
+
+Route::get('positions', function () {
+    return Position::get();
+});
+
+Route::post('profile/personal-information', function () {
+    $employee = Employee::find(request()->employee_id);
+    $employee->first_name = request()->first_name;
+    $employee->last_name = request()->last_name;
+    $employee->middle_name = request()->middle_name;
+    $employee->suffix = request()->suffix;
+    $employee->email = request()->email;
+    $employee->phone_number = request()->phone_number;
+    $employee->address = request()->address;
+    $employee->save();
+    return response()->json(['data' => $employee, 'success' => true]);
+});
+
+Route::post('profile/account-information', function () {
+    $user = User::find(request()->id);
+    $employee = $user->information;
+    $user->email = request()->email;
+    if(request()->has('password') && !is_null(request()->password)) {
+        $user->password = bcrypt(request()->password);
+    }
+    $user->save();
+    $employee->email = request()->email;
+    $employee->save();
+    return response()->json(['success' => true]);
+});
+
+Route::get('user-visits-activities/{id}', function ($id) {
+    return DB::table('visits_monitoring')->where('user_id', $id)->paginate(10);
+});
+
+Route::get('user-authentications-activities/{id}', function ($id) {
+    return DB::table('authentications_monitoring')->where('user_id', $id)->paginate(10);
+});
+

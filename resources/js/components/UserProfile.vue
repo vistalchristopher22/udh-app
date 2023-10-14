@@ -30,7 +30,7 @@
             <li class="nav-item">
               <a class="nav-link"
                 data-bs-toggle="pill"
-                href="#Profile_ActivityLog">Activity Logs</a>
+                href="#Profile_ActivityLog">Activities</a>
             </li>
           </ul>
         </div>
@@ -55,7 +55,7 @@
               <div class="tab-pane fade"
                 id="Profile_ActivityLog"
                 role="tabpanel">
-                <UserActivityLog />
+                <UserActivityLog :id="information.id" />
               </div>
 
               

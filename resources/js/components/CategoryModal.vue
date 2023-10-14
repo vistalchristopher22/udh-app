@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-auto-animate>
     <div class="modal-backdrop fade show" v-show="isDisplay">
 
       <div class="modal fade bd-example-modal-lg show" tabindex="-1" style="display: block;" aria-modal="true"

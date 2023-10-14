@@ -28,7 +28,6 @@ class EmployeeFactory extends Factory
             'last_name' => fake()->lastName(),
             'suffix' => fake()->suffix(),
             'email' => fake()->unique()->safeEmail(),
-            'password' => bcrypt('password'),
             'phone_number' => fake()->phoneNumber(),
             'office' => Office::get()->random()->id,
             'address' => fake()->address(),
