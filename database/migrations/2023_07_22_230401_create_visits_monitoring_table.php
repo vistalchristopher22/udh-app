@@ -14,9 +14,7 @@ return new class extends Migration
     {
         Schema::create(config('user-monitoring.visit_monitoring.table'), function (Blueprint $table) {
             $table->id();
-
             UserUtils::userForeignKey($table);
-
             $table->string('browser_name');
             $table->string('platform');
             $table->string('device');

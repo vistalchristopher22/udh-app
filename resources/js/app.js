@@ -7,6 +7,7 @@ import FileManager from './components/FileManager.vue'
 import Tags from './components/Tags.vue'
 import Categories from './components/CategoryList.vue'
 import UserProfile from './components/UserProfile.vue'
+import AccountSetup from './components/AccountSetup.vue'
 import { autoAnimatePlugin } from "@formkit/auto-animate/vue"
 import 'notyf/notyf.min.css'; 
 
@@ -26,5 +27,8 @@ app.component('file-manager', FileManager);
 app.component('tags', Tags);
 app.component('categories', Categories);
 app.component('user-profile', UserProfile);
+app.component('account-setup', AccountSetup);
 
 app.mount("#app");
+
+

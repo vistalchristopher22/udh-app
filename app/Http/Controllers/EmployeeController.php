@@ -56,7 +56,13 @@ class EmployeeController extends Controller
 
     public function update(string $employeeID, UpdateRequest $request)
     {
-        $this->employeeRepository->update($employeeID, $request->except('password_confirmation'));
+        $data = $request->except('role');
+
+        if (is_null($request->password)) {
+            $data = $request->except(['password', 'password_confirmation', 'role']);
+        }
+
+        $this->employeeRepository->update($employeeID, $data);
 
         return to_route('employee.index')->with('success', 'Employee updated successfully');
     }

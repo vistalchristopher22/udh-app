@@ -13,7 +13,7 @@ final class DocumentRepository extends BaseRepository
 
     public function get()
     {
-        return $this->model->with(['uploaded_by_detail', 'office_responsible_detail', 'tags'])
+        return $this->model->with(['uploaded_by_detail', 'office_responsible_detail', 'tags', 'category'])
             ->when(request()->has('type'), function ($query) {
                 return $query->where('file_path', 'like', '%'.request()->type.'%');
             })->when(request()->has('level'), function ($query) {

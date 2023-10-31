@@ -7,13 +7,13 @@
 @endprepend
 @section('content')
     @include('includes.success')
-    <div class="card">
-        <div class="card-header bg-dark d-flex justify-content-between align-items-center">
-            <div class="card-title text-white">
+    <div class="card shadow-sm rounded-0">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <div class="card-title">
                 Complete listing <span class="text-lowercase">of</span> Employees / Users
             </div>
             @can('create employee')
-                <a href="{{ route('employee.create') }}" class="btn btn-light shadow-lg fw-medium">
+                <a href="{{ route('employee.create') }}" class="btn btn-dark shadow-lg fw-medium">
                     Add New Employee / User
                 </a>
             @endcan
@@ -37,7 +37,8 @@
                         <tr>
                             <td class="text-start"><span class="ms-2"></span>{{ $employee->fullname }}</td>
                             <td class="text-start"><span class="ms-2"></span>{{ $employee?->position_detail?->name }}</td>
-                            <td class="text-start"><span class="ms-2"></span>{{ $employee?->office_detail?->name }}</td>
+                            <td class="text-start"><span class="ms-2"></span>{{ $employee?->office_detail?->name }} -
+                                {{ $employee?->office_detail?->campus?->name }}</td>
                             <td class="text-start"><span class="ms-2"></span>{{ $employee->work_status }}</td>
                             <td class="text-center"><span class="ms-2"></span>
                                 <span @class([
@@ -51,10 +52,8 @@
                             <td class="text-start"><span class="ms-2"></span>{{ $employee->email }}</td>
                             <td class="text-start"><span class="ms-2"></span>{{ $employee->phone_number }}</td>
                             <td class="text-center">
-                                @can('edit employee')
-                                    <a class="btn btn-soft-success"
-                                        href="{{ route('employee.edit', $employee->employee_id) }}">Edit</a>
-                                @endcan
+                                <a class="btn btn-soft-success"
+                                    href="{{ route('employee.edit', $employee->employee_id) }}">Edit</a>
                             </td>
                         </tr>
                     @endforeach

@@ -2,9 +2,14 @@
 @section('page-title', '')
 @section('content')
     @include('includes.success')
-    <div class="card">
-        <div class="card-header bg-dark d-flex justify-content-between align-items-center">
-            <div class="card-title text-white">
+    <div class="card bg-danger border-0 shadow-none">
+        <div class="card-body text-white">
+            All fields mark with * are required
+        </div>
+    </div>
+    <div class="card shadow rounded-0">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <div class="card-title text-dark">
                 Add New Employee / User
             </div>
         </div>
@@ -97,7 +102,7 @@
                         <option value="">Select Office</option>
                         @foreach ($offices as $office)
                             <option value="{{ $office->id }}" {{ old('office') == $office->id ? 'selected' : '' }}>
-                                {{ $office->name }}
+                                {{ $office->name }} - {{ $office->campus }}
                             </option>
                         @endforeach
                     </select>

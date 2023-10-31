@@ -28,6 +28,7 @@ class StoreRequest extends FormRequest
             'office' => ['required', 'exists:offices,id'],
             'access_level' => ['required', 'in:'.implode(',', AccessType::all())],
             'file' => ['required', 'file'],
+            'category_id' => 'required|exists:categories,id',
         ];
     }
 }

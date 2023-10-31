@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('description');
             $table->timestamp('uploaded_at');
             $table->text('file_path');
-            $table->text('file_content');
+            $table->text('file_content')->nullable();
             $table->string('file_type');
             $table->integer('size');
             $table->string('version');

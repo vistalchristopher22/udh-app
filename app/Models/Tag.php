@@ -20,5 +20,4 @@ class Tag extends Model
     {
         return date('F d, Y h:i A', strtotime($value));
     }
-
 }

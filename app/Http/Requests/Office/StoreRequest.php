@@ -29,6 +29,7 @@ class StoreRequest extends FormRequest
             'phone_number' => ['nullable'],
             'telephone_number' => ['nullable'],
             'email' => ['required', 'email'],
+            'campus_id' => 'required|exists:campuses,id',
         ];
     }
 }

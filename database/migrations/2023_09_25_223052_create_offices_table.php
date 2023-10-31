@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Campus;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -21,7 +22,9 @@ return new class extends Migration
             $table->string('telephone_number')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('email')->unique();
+            $table->foreignIdFor(Campus::class)->nullable();
             $table->foreignIdFor(User::class, 'office_head')->nullable();
+            $table->string('code')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -26,6 +26,7 @@ final class UpdateDocument extends BasePipeHandler
                 'file_type' => $payload['file_type'],
                 'version' => $payload['version'],
                 'file_content' => '',
+                'category_id' => $payload['form']['category_id'],
             ]);
         } else {
             $payload['model']->update([
@@ -33,6 +34,7 @@ final class UpdateDocument extends BasePipeHandler
                 'description' => $payload['form']['description'],
                 'access_level' => $payload['form']['access_level'],
                 'office_responsible' => $payload['form']['office'],
+                'category_id' => $payload['form']['category_id'],
             ]);
         }
 

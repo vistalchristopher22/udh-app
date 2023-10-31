@@ -19,6 +19,7 @@
         "alertify": "^0.3.0",
         "alertifyjs": "^1.13.1",
         "notyf": "^3.10.0",
+        "v-dragged": "^0.0.5",
         "vue": "^3.2.36",
         "vue-loader": "^17.2.2",
         "vue3-google-login": "^2.0.23"

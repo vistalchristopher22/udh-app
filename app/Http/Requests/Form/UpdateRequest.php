@@ -28,6 +28,7 @@ class UpdateRequest extends FormRequest
             'office' => ['required', 'exists:offices,id'],
             'access_level' => ['required', 'in:'.implode(',', AccessType::all())],
             'file' => ['nullable', 'file'],
+            'category_id' => 'required|exists:categories,id',
         ];
     }
 }

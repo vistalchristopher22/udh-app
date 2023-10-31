@@ -30,4 +30,9 @@ class ServiceProcess extends Model
     {
         return $this->belongsTo(Employee::class, 'secretary', 'employee_id');
     }
+
+    public function requirements()
+    {
+        return $this->hasMany(ServiceProcessRequirements::class, 'service_process_id');
+    }
 }

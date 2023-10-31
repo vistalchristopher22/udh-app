@@ -16,13 +16,13 @@
                 <div class="col-lg-4 align-self-center mb-3 mb-lg-0">
                   <div class="dastone-profile-main">
                     <div class="dastone-profile-main-pic">
-                      <img src="/assets/images/users/user-4.jpg"
+                      <img src="/logo.png"
                         alt=""
                         height="110"
                         class="rounded-circle">
                     </div>
                     <div class="dastone-profile_user-detail">
-                      <h5 class="dastone-user-name">{{ information?.first_name || ''}} {{ information?.last_name || '' }}</h5>
+                      <h5 class="dastone-user-name">{{ information?.first_name || ''}} {{ information?.last_name || '' }} {{ information.suffix }}</h5>
                       <p class="mb-0 dastone-user-name-post">{{ information?.employee_id }}</p>
                     </div>
                   </div>

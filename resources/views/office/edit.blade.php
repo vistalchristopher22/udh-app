@@ -18,6 +18,13 @@
                 @method('PUT')
                 @csrf
                 <div class="form-group">
+                    <label for="map" class="required">Location</label>
+                    @error('location') <span class="text-danger">{{ $message }}</span> @enderror
+                    <div id="map" style="width: 100%; height: 400px;"
+                         class="border rounded @error('location') border-danger @enderror"></div>
+                </div>
+
+                <div class="form-group">
                     <label for="name" class="required">Name</label>
                     <input id="name" type="text" name="name" value="{{ $office->name }}"
                            class="form-control @error('name') is-invalid @enderror">
@@ -28,11 +35,15 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="map" class="required">Location</label>
-                    @error('location') <span class="text-danger">{{ $message }}</span> @enderror
-                    <div id="map" style="width: 100%; height: 400px;"
-                         class="border rounded @error('location') border-danger @enderror"></div>
+                    <label for="code" class="required">Code</label>
+                    <input id="code" type="text" name="code" value="{{ $office->code }}"
+                           class="form-control @error('code') is-invalid @enderror">
+                    @error('code')
+                    <div class="invalid-feedback">{{ $message }}
+                    </div>
+                    @enderror
                 </div>
+
 
                 <div class="form-group d-none">
                     <label>
@@ -51,6 +62,21 @@
                     </div>
                     @enderror
                 </div>
+
+                <div class="form-group">
+                    <label for="campus_id" class="required">Campus</label>
+                    <select name="campus_id" id="campus_id" class="form-control @error('campus_id') is-invalid @enderror">
+                        @foreach($campuses as $campus)
+                            <option value="{{ $campus->id }}" {{ $office->campus_id == $campus->id ? 'selected' : '' }}>
+                                {{ $campus->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('campus_id')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                
 
                 <div class="form-group">
                     <label for="telephone_number">Telephone Number</label>
@@ -109,9 +135,11 @@
             }).addTo(map);
 
             let marker = null;
-            let {lat, lng} = JSON.parse(coordinates);
+            if(coordinates) {
+                let {lat, lng} = JSON.parse(coordinates);
+                marker = L.marker([lat, lng], {draggable: true}).addTo(map);
+            }
 
-            marker = L.marker([lat, lng], {draggable: true}).addTo(map);
 
             // Function to handle click events on the map
             function onMapClick(e) {

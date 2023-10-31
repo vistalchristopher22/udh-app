@@ -31,8 +31,18 @@ class Document extends Model
         return $this->belongsToMany(Tag::class);
     }
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     public function how_to_complete()
     {
         return $this->hasMany(ServiceProcess::class);
+    }
+
+    public function requirements()
+    {
+        return $this->hasMany(Requirement::class);
     }
 }

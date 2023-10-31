@@ -2,9 +2,28 @@
 @section('page-title', '')
 @section('content')
     @include('includes.success')
-    <div class="accordion mb-3" id="accordionParent">
+
+    <div id="modalRequirements" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title font-weight-bold">Form Requirements</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="modalRequirementsBody" class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <a id="btnModalRequirementViewServiceProcess" target="_blank" class="btn btn-soft-primary">View Service Process</a>
+                    <button type="button" class="btn btn-soft-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="accordionParent" class="accordion mb-3">
         <div class="accordion-item rounded-0 shadow-sm">
-            <h5 class="accordion-header m-0" id="headingOne">
+            <h5 id="headingOne" class="accordion-header m-0">
                 <button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapse" aria-expanded="false" aria-controls="collapse">
                     <span class="h6 fw-medium">What are you looking for?</span>
@@ -17,7 +36,7 @@
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label for="fileType" class="fw-medium text-uppercase">File type</label>
-                                <select class="form-control" id="fileType">
+                                <select id="fileType" class="form-control">
                                     <option value="*" selected>All</option>
                                     @foreach ($availableFileTypes as $fileType)
                                         <option {{ request()->type == $fileType ? 'selected' : '' }}
@@ -27,10 +46,11 @@
                             </div>
                         </div>
 
+
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label for="accessLevel" class="fw-medium text-uppercase">Access Level</label>
-                                <select class="form-control" id="accessLevel">
+                                <select id="accessLevel" class="form-control">
                                     <option value="*" selected>All</option>
                                     @foreach ($accessLevels as $accessLevel)
                                         <option {{ request()->level == $accessLevel->value ? 'selected' : '' }}
@@ -46,7 +66,7 @@
                             <div class="form-group">
                                 <label for="officeResponsible" class="fw-medium text-uppercase">Office
                                     Responsible</label>
-                                <select class="form-control" id="officeResponsible">
+                                <select id="officeResponsible" class="form-control">
                                     <option value="*" selected>All</option>
                                     @foreach ($offices as $office)
                                         <option {{ request()->office == $office->id ? 'selected' : '' }}
@@ -59,7 +79,7 @@
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label for="uploadedBy" class="fw-medium text-uppercase">Uploaded by</label>
-                                <select class="form-control" id="uploadedBy">
+                                <select id="uploadedBy" class="form-control">
                                     <option value="*" selected>All</option>
                                     @foreach ($availableUploadedBy as $employeeID => $uploadedBy)
                                         <option {{ request()->uploaded == $employeeID ? 'selected' : '' }}
@@ -72,7 +92,7 @@
                     </div>
 
                     <div class="text-end">
-                        <input type="submit" class="btn btn-soft-primary mb-2" id="btnSubmitFilter" value="Apply Filters">
+                        <input id="btnSubmitFilter" type="submit" class="btn btn-soft-primary mb-2" value="Apply Filters">
                     </div>
 
                 </div>
@@ -100,7 +120,7 @@
             @else
                 <div class="row">
                     @foreach ($forms as $document)
-                        <div class="col-lg-4 mb-2" id="file-record-{{ $document->id }}">
+                        <div id="file-record-{{ $document->id }}" class="col-lg-4 mb-2">
                             <div class="card rounded-0 shadow-sm">
                                 <div
                                     class="card-text border border-bottom p-2 pt-0 border-0 d-flex align-items-center justify-content-between">
@@ -123,11 +143,16 @@
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item"
                                                 href="{{ route('document.edit', $document) }}">Edit</a>
-                                            <a class="dropdown-item" href="{{ route('document.download', $document->id) }}"
+                                            <a class="dropdown-item"
+                                                href="{{ route('document.download', $document->id) }}"
                                                 download>Download</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item"
                                                 href="{{ route('document-process.create', $document) }}">Service Process
+                                            </a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item view-document-requirements" style="cursor:pointer;"
+                                                data-id="{{ $document->id }}">View Requirements
                                             </a>
                                         </div>
                                     </div>
@@ -145,7 +170,9 @@
                                             'bg-primary' =>
                                                 $document->file_type == 'doc' || $document->file_type == 'docx',
                                             'bg-success' =>
-                                                $document->file_type == 'xls' || $document->file_type == 'xlsx',
+                                                $document->file_type == 'xls' ||
+                                                $document->file_type == 'xlsx' ||
+                                                $document->file_type == 'csv',
                                             'bg-warning' =>
                                                 $document->file_type == 'ppt' || $document->file_type == 'pptx',
                                         ])>
@@ -208,6 +235,14 @@
                                     </div>
                                     <div>
                                         <div class="d-flex justify-content-between">
+                                            <h6 class="fw-semibold">Category : <span
+                                                    @class(['badge', 'text-capitalize', 'bg-soft-info'])>{{ $document->category->name }}</span>
+                                            </h6>
+
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="d-flex justify-content-between">
                                             <h6 class="fw-semibold">Access Level : <span
                                                     @class([
                                                         'badge',
@@ -240,6 +275,9 @@
     </div>
     @push('page-scripts')
         <script>
+            let viewRequirementsModal = new bootstrap.Modal(document.getElementById('modalRequirements'), {});
+            let btnModalRequirementViewService = document.querySelector('#btnModalRequirementViewServiceProcess');
+
             let baseUrl = "/document";
 
             let queryParams = {
@@ -302,6 +340,33 @@
 
             document.querySelector('#btnSubmitFilter').addEventListener('click', function() {
                 window.location.href = buildUrl(queryParams);
+            });
+
+            document.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A' && e.target.className.includes('view-document-requirements')) {
+                    let id = e.target.getAttribute('data-id');
+                    btnModalRequirementViewService.setAttribute('href', `/document-process/${id}`);
+                    viewRequirementsModal.show();
+                    fetch(`/api/view-requirements/${id}`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            document.querySelector('#modalRequirementsBody').innerHTML = `<ul class="list-group">`;
+                            data.forEach((requirement) => {
+                                document.querySelector('#modalRequirementsBody').innerHTML +=
+                                    `<li class="list-group-item">${requirement.description}</li>`;
+                            });
+                            document.querySelector('#modalRequirementsBody').innerHTML += `<ul class="list-group">`;
+                        })
+                        .catch(error => {
+                            console.error('Fetch error:', error);
+                        });
+
+                }
             });
         </script>
     @endpush

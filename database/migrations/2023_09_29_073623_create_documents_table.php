@@ -23,6 +23,8 @@ return new class extends Migration
             $table->enum('status', ['active', 'archived', 'deprecated']);
             $table->json('coordinates')->nullable();
             $table->foreignIdFor(Employee::class, 'uploaded_by');
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
             $table->timestamp('uploaded_at');
             $table->text('file_path');
             $table->text('file_content');

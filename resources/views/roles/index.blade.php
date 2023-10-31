@@ -34,14 +34,11 @@
             <div class="card-title">
                 Complete listing <span class="text-lowercase">of</span> <span class="fw-bold">Roles & Permissions</span>
             </div>
-            <a href="{{ route('roles.create') }}" class="btn btn-light shadow-lg fw-medium">
+            <a href="{{ route('roles.create') }}" class="btn btn-dark shadow-lg fw-medium">
                 Add New Role
             </a>
         </div>
         <div class="card-body">
-            <button class="btn btn-dark mb-2 shadow-lg" data-bs-toggle="modal" data-bs-target="#permissionModal"
-                id="btnCreatePermission">Create New Permission
-            </button>
             <table class="table table-hover table-bordered">
                 <thead>
                     <tr>

@@ -14,17 +14,17 @@
 @section('content')
     @include('includes.success')
     <!-- Modal -->
-    <div class="modal fade" id="addProcessModal" tabindex="-1" role="dialog" aria-labelledby="addProcessModalLabel"
+    <div id="addProcessModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addProcessModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addProcessModalLabel">Add New Process</h5>
+                    <h5 id="addProcessModalLabel" class="modal-title">Add New Process</h5>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="office" class="required">Office : </label>
-                        <select name="office" id="office" class="form-select">
+                        <select id="office" name="office" class="form-select">
                             <option value="" disabled selected>Select Office</option>
                             @foreach ($offices as $office)
                                 <option value="{{ $office->id }}">{{ $office->name }}</option>
@@ -34,7 +34,7 @@
 
                     <div class="form-group">
                         <label for="serviceDescription" class="required">Description : </label>
-                        <textarea class="form-control" id="serviceDescription" rows="3"></textarea>
+                        <textarea id="serviceDescription" class="form-control" rows="3"></textarea>
                     </div>
 
                     <div class="row">
@@ -42,28 +42,28 @@
                             <div class="form-group">
                                 <label for="estimatedDurationDays" class="required">Estimated Duration (Days)
                                     : </label>
-                                <input type="number" class="form-control" id="estimatedDurationDays">
+                                <input id="estimatedDurationDays" type="number" class="form-control">
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="estimatedDurationHours" class="required">Estimated Duration (Hours)
                                     : </label>
-                                <input type="number" class="form-control" id="estimatedDurationHours">
+                                <input id="estimatedDurationHours" type="number" class="form-control">
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="estimatedDurationMinutes" class="required">Estimated Duration (Minutes)
                                     : </label>
-                                <input type="number" class="form-control" id="estimatedDurationMinutes">
+                                <input id="estimatedDurationMinutes" type="number" class="form-control">
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="lookFor" class="required">Person In-charge : </label>
-                        <select name="lookFor" id="lookFor" class="form-select">
+                        <select id="lookFor" name="lookFor" class="form-select">
                             <option value="" disabled selected>Select Person In-charge</option>
                             @foreach ($employees as $employee)
                                 <option value="{{ $employee->employee_id }}">{{ $employee->fullname }}</option>
@@ -73,33 +73,50 @@
 
                     <div class="form-group">
                         <label for="secretary" class="required">Secretary : </label>
-                        <select name="secretary" id="secretary" class="form-select">
+                        <select id="secretary" name="secretary" class="form-select">
                             <option value="" disabled selected>Select Secretary</option>
                             @foreach ($employees as $employee)
                                 <option value="{{ $employee->employee_id }}">{{ $employee->fullname }}</option>
                             @endforeach
                         </select>
                     </div>
+
+                    <div class="form-group d-flex align-items-center justify-content-between">
+                        <label for="requirements">Requirements:</label>
+                        <button id="add-requirement" type="button" class="btn btn-dark">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                            </svg>
+                            Add Requirements
+                        </button>
+                    </div>
+
+                    <div id="requirements-container">
+                    </div>
+                    <hr>
+
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-soft-secondary" id="btnCloseAddProcessModal">Close</button>
-                    <button type="button" class="btn btn-soft-primary" id="btnSaveProcess">Save Process</button>
+                    <button id="btnCloseAddProcessModal" type="button" class="btn btn-soft-secondary">Close</button>
+                    <button id="btnSaveProcess" type="button" class="btn btn-soft-primary">Save Process</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="editProcessModal" tabindex="-1" role="dialog" aria-labelledby="editProcessModal"
+    <div id="editProcessModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editProcessModal"
         aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editProcessModal">Edit Process</h5>
+                    <h5 id="editProcessModal" class="modal-title">Edit Process</h5>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="editOffice" class="required">Office : </label>
-                        <select name="editOffice" id="editOffice" class="form-select">
+                        <select id="editOffice" name="editOffice" class="form-select">
                             <option value="" disabled selected>Select Office</option>
                             @foreach ($offices as $office)
                                 <option value="{{ $office->id }}">{{ $office->name }}</option>
@@ -109,7 +126,7 @@
 
                     <div class="form-group">
                         <label for="editServiceDescription" class="required">Description : </label>
-                        <textarea class="form-control" id="editServiceDescription" rows="3"></textarea>
+                        <textarea id="editServiceDescription" class="form-control" rows="3"></textarea>
                     </div>
 
                     <div class="row">
@@ -117,28 +134,28 @@
                             <div class="form-group">
                                 <label for="editEstimatedDurationDays" class="required">Estimated Duration (Days)
                                     : </label>
-                                <input type="number" class="form-control" id="editEstimatedDurationDays">
+                                <input id="editEstimatedDurationDays" type="number" class="form-control">
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="editEstimatedDurationHours" class="required">Estimated Duration (Hours)
                                     : </label>
-                                <input type="number" class="form-control" id="editEstimatedDurationHours">
+                                <input id="editEstimatedDurationHours" type="number" class="form-control">
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="editEstimatedDurationMinutes" class="required">Estimated Duration (Minutes)
                                     : </label>
-                                <input type="number" class="form-control" id="editEstimatedDurationMinutes">
+                                <input id="editEstimatedDurationMinutes" type="number" class="form-control">
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="editLookFor" class="required">Person In-charge : </label>
-                        <select name="editLookFor" id="editLookFor" class="form-select">
+                        <select id="editLookFor" name="editLookFor" class="form-select">
                             <option value="" disabled selected>Select Person In-charge</option>
                             @foreach ($employees as $employee)
                                 <option value="{{ $employee->employee_id }}">{{ $employee->fullname }}</option>
@@ -148,30 +165,45 @@
 
                     <div class="form-group">
                         <label for="editSecretary" class="required">Secretary : </label>
-                        <select name="editSecretary" id="editSecretary" class="form-select">
-                            <option value="" disabled selected>Select editSecretary</option>
+                        <select id="editSecretary" name="editSecretary" class="form-select">
+                            <option value="" disabled selected>Select Secretary</option>
                             @foreach ($employees as $employee)
                                 <option value="{{ $employee->employee_id }}">{{ $employee->fullname }}</option>
                             @endforeach
                         </select>
                     </div>
+
+                    <div class="form-group d-flex align-items-center justify-content-between">
+                        <label for="editRequirements">Requirements:</label>
+                        <button id="edit-add-requirement" type="button" class="btn btn-dark">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                            </svg>
+                            Add Requirements
+                        </button>
+                    </div>
+
+                    <div id="edit-requirements-container">
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-soft-secondary" id="btnEditCloseModal">Close</button>
-                    <button type="button" class="btn btn-soft-success" id="btnEditSaveProcess">Save Process</button>
+                    <button id="btnEditCloseModal" type="button" class="btn btn-soft-secondary">Close</button>
+                    <button id="btnEditSaveProcess" type="button" class="btn btn-soft-success">Save Process</button>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="card">
-        <div class="card-header bg-light">
+        <div class="card-header">
             <div class="d-flex align-items-center justify-content-between">
                 <div class="card-title">
-                    <h5 class="fw-medium">How <span class="text-lowercase">to</span> complete</h5>
+                    <h5 class="fw-bold">How <span class="text-lowercase">to</span> complete</h5>
                 </div>
                 <div>
-                    <button class="btn btn-dark shadow shadow-dark align-middle" id="btnAddNewProcess">
+                    <button id="btnAddNewProcess" class="btn btn-dark shadow shadow-dark align-middle">
                         <i class="mdi mdi-plus-outline me-2"></i>
                         Add New Process
                     </button>
@@ -243,6 +275,16 @@
                                             {{ $instruction->estimated_duration_minutes }} Minute/s
                                         </span>
                                     </span>
+                                    <br>
+                                    <span class="text-dark mb-0">Requirements :
+                                        <ul>
+                                            @foreach ($instruction->requirements as $requirement)
+                                                <li class="m-0 fw-bold">
+                                                    {{ $requirement->description }}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </span>
                                     <hr>
                                 </p>
                             </div>
@@ -251,9 +293,18 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <div id="map" style="width: 100%; height: 800px;" class="border rounded-0"></div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <h5 class="fw-bold">Directions</h5>
+            </div>
+        </div>
+        <div class="card-body">
+            <div id="map" style="width: 100%; height: 800px;" class="border rounded-0"></div>
 
+        </div>
     </div>
     @push('page-scripts')
         <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
@@ -294,6 +345,42 @@
                                 .estimated_duration_minutes;
                             document.querySelector('#editLookFor').value = data.look_for;
                             document.querySelector('#editSecretary').value = data.secretary;
+
+                            const editRequirementsContainer = document.getElementById(
+                                'edit-requirements-container');
+
+                            // Clear existing requirement fields
+                            editRequirementsContainer.innerHTML = '';
+
+                            // Populate the edit-requirements-container with existing requirements
+                            data.requirements.forEach((requirement) => {
+                                const editRequirementField = document.createElement('div');
+                                editRequirementField.classList.add('mb-2');
+
+                                const editRequirementInput = document.createElement('input');
+                                editRequirementInput.setAttribute('type', 'text');
+                                editRequirementInput.setAttribute('name', 'editRequirements[]');
+                                editRequirementInput.setAttribute('placeholder',
+                                    'Enter requirement description');
+                                editRequirementInput.classList.add('form-control');
+                                editRequirementInput.value = requirement
+                                    .description; // Populate with existing requirement
+
+                                const editRemoveButton = document.createElement('button');
+                                editRemoveButton.setAttribute('type', 'button');
+                                editRemoveButton.setAttribute('tabindex', '-1');
+                                editRemoveButton.classList.add('btn', 'btn-danger', 'float-end',
+                                    'rounded-0');
+                                editRemoveButton.textContent = 'X';
+
+                                editRemoveButton.addEventListener('click', function() {
+                                    editRequirementsContainer.removeChild(editRequirementField);
+                                });
+
+                                editRequirementField.appendChild(editRequirementInput);
+                                editRequirementField.prepend(editRemoveButton);
+                                editRequirementsContainer.appendChild(editRequirementField);
+                            });
                             editProcessModalInstance.show();
                         });
                 } else if (target.classList.contains('btn-delete-process')) {
@@ -343,6 +430,9 @@
             });
 
             document.querySelector('#btnSaveProcess').addEventListener('click', () => {
+                const requirements = Array.from(document.querySelectorAll('[name="requirements[]"]')).map(input => input
+                    .value);
+
                 let data = {
                     office: document.querySelector('#office').value,
                     description: document.querySelector('#serviceDescription').value,
@@ -352,6 +442,7 @@
                     estimatedDurationDays: document.querySelector('#estimatedDurationDays').value,
                     estimatedDurationHours: document.querySelector('#estimatedDurationHours').value,
                     estimatedDurationMinutes: document.querySelector('#estimatedDurationMinutes').value,
+                    requirements: requirements,
                 };
 
                 fetch(`/document-process/${keyId}`, {
@@ -368,11 +459,14 @@
                         return res.json();
                     })
                     .then((data) => {
-                        alert(JSON.stringify(data))
+                        location.reload();
                     });
             });
 
             document.querySelector('#btnEditSaveProcess').addEventListener('click', () => {
+                const requirements = Array.from(document.querySelectorAll('[name="editRequirements[]"]')).map(input => input
+                    .value);
+
                 let data = {
                     office: document.querySelector('#editOffice').value,
                     description: document.querySelector('#editServiceDescription').value,
@@ -381,6 +475,7 @@
                     estimatedDurationDays: document.querySelector('#editEstimatedDurationDays').value,
                     estimatedDurationHours: document.querySelector('#editEstimatedDurationHours').value,
                     estimatedDurationMinutes: document.querySelector('#editEstimatedDurationMinutes').value,
+                    requirements : requirements,
                 };
 
                 fetch(`/document-process/${getServiceIdState()}`, {
@@ -397,7 +492,7 @@
                         return res.json();
                     })
                     .then((data) => {
-                        alert(JSON.stringify(data))
+                        location.reload();
                     });
             });
         </script>
@@ -405,9 +500,8 @@
         <script>
             let coordinates = @json($serviceCoordinates);
 
-            let map = L.map('map').setView([9.039785308062852, 126.21664534187704], 25);
-
-
+            let map = L.map('map', {}).setView([9.039785308062852, 126.21664534187704], 25);
+            map.zoomControl.remove();
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
@@ -429,6 +523,71 @@
                     return marker;
                 }
             }).addTo(map);
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const requirementsContainer = document.getElementById('requirements-container');
+                const addRequirementButton = document.getElementById('add-requirement');
+
+                const editRequirementsContainer = document.getElementById('edit-requirements-container');
+                const editAddRequirementButton = document.getElementById('edit-add-requirement');
+
+                addRequirementButton.addEventListener('click', function() {
+                    // Create a new requirement field
+                    const requirementField = document.createElement('div');
+                    requirementField.classList.add('mb-2');
+
+                    const requirementInput = document.createElement('input');
+                    requirementInput.setAttribute('type', 'text');
+                    requirementInput.setAttribute('name', 'requirements[]');
+                    requirementInput.setAttribute('placeholder', 'Enter requirement description');
+                    requirementInput.classList.add('form-control');
+
+                    const removeButton = document.createElement('button');
+                    removeButton.setAttribute('type', 'button');
+                    removeButton.setAttribute('tabindex', '-1')
+                    removeButton.classList.add('btn', 'btn-danger', 'float-end', 'rounded-0');
+                    removeButton.textContent = 'X';
+
+                    removeButton.addEventListener('click', function() {
+                        requirementsContainer.removeChild(requirementField);
+                    });
+
+                    requirementField.appendChild(requirementInput);
+                    requirementField.prepend(removeButton);
+                    requirementsContainer.appendChild(requirementField);
+                });
+
+
+
+                editAddRequirementButton.addEventListener('click', function() {
+                    // Create a new requirement field
+                    const editRequirementField = document.createElement('div');
+                    editRequirementField.classList.add('mb-2');
+
+                    const editRequirementInput = document.createElement('input');
+                    editRequirementInput.setAttribute('type', 'text');
+                    editRequirementInput.setAttribute('name',
+                        'editRequirements[]'); // Use a different name for edit
+                    editRequirementInput.setAttribute('placeholder', 'Enter requirement description');
+                    editRequirementInput.classList.add('form-control');
+
+                    const editRemoveButton = document.createElement('button');
+                    editRemoveButton.setAttribute('type', 'button');
+                    editRemoveButton.setAttribute('tabindex', '-1');
+                    editRemoveButton.classList.add('btn', 'btn-danger', 'float-end', 'rounded-0');
+                    editRemoveButton.textContent = 'X';
+
+                    editRemoveButton.addEventListener('click', function() {
+                        editRequirementsContainer.removeChild(editRequirementField);
+                    });
+
+                    editRequirementField.appendChild(editRequirementInput);
+                    editRequirementField.prepend(editRemoveButton);
+                    editRequirementsContainer.appendChild(editRequirementField);
+                });
+            });
         </script>
     @endpush
 @endsection

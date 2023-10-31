@@ -2,13 +2,7 @@
   <div class="form-group mb-2">
     <label class="form-label" for="email">Email</label>
     <div class="input-group">
-      <input
-        type="email"
-        class="form-control"
-        name="email"
-        id="email"
-        placeholder="Enter email"
-      />
+      <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" />
     </div>
   </div>
   <!--end form-group-->
@@ -16,13 +10,7 @@
   <div class="form-group mb-2">
     <label class="form-label" for="password">Password</label>
     <div class="input-group">
-      <input
-        type="password"
-        class="form-control"
-        name="password"
-        id="password"
-        placeholder="Enter password"
-      />
+      <input type="password" class="form-control" name="password" id="password" placeholder="Enter password" />
     </div>
   </div>
   <!--end form-group-->
@@ -30,21 +18,14 @@
   <div class="form-group row my-3">
     <div class="col-sm-6">
       <div class="custom-control custom-switch switch-success">
-        <input
-          type="checkbox"
-          class="custom-control-input"
-          id="customSwitchSuccess"
-        />
+        <input type="checkbox" class="custom-control-input" id="customSwitchSuccess" />
         <label class="form-label text-muted" for="customSwitchSuccess">
-          &nbsp; Remember Me</label
-        >
+          &nbsp; Remember Me</label>
       </div>
     </div>
     <!--end col-->
     <div class="col-sm-6 text-end">
-      <a href="auth-recover-pw.html" class="text-muted font-13"
-        ><i class="dripicons-lock"></i> Forgot password?</a
-      >
+      <a href="auth-recover-pw.html" class="text-muted font-13"><i class="dripicons-lock"></i> Forgot password?</a>
     </div>
     <!--end col-->
   </div>
@@ -52,10 +33,7 @@
 
   <div class="form-group mb-0 row">
     <div class="col-12">
-      <button
-        class="btn btn-primary w-100 waves-effect waves-light"
-        type="submit"
-      >
+      <button class="btn btn-primary w-100 waves-effect waves-light" type="submit">
         Log In <i class="fas fa-sign-in-alt ms-1"></i>
       </button>
     </div>
@@ -78,17 +56,22 @@
 <script setup>
 import { decodeCredential, googleLogout } from "vue3-google-login";
 import { ref } from "vue";
+import axios from "axios";
 const user = ref({});
 const callback = (response) => {
   user.value = decodeCredential(response.credential);
-  console.log(user.value);
-  //   if (
-  //     user.value.email.endsWith("nemsu.edu.ph") &&
-  //     user.value.hd == "nemsu.edu.ph"
-  //   ) {
-  //     window.location.href = "/dashboard";
-  //     localStorage.setItem("user", JSON.stringify(user.value));
-  //   }
+  if (
+    user.value.email.endsWith("nemsu.edu.ph") &&
+    user.value.hd == "nemsu.edu.ph"
+  ) {
+    axios.post(`/google-sign-in`, {
+      data: JSON.stringify(user.value),
+    }).then((response) => {
+      if (response.status === 201) {
+        location.href = '/account-setup'
+      }
+    });
+  }
 };
 const logout = () => googleLogout();
 </script>

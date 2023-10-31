@@ -9,12 +9,11 @@ final class DocumentProcessService
     public static function getProcessCoordinates(Document $document): array
     {
         $serviceCoordinates = [];
-
         foreach ($document->how_to_complete as $index => $howToComplete) {
-            $latLng = json_decode($howToComplete?->office->location);
+            $latLng = json_decode($howToComplete?->office?->location);
             $serviceCoordinates[($index + 1).'. '.$howToComplete?->office?->name] = [
-                'lat' => $latLng->lat,
-                'lng' => $latLng->lng,
+                'lat' => $latLng->lat ?? $latLng?->latitude,
+                'lng' => $latLng->lng ?? $latLng?->longitude,
             ];
         }
 

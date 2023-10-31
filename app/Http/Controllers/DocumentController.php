@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use App\Enums\AccessType;
 use App\Http\Requests\Form\StoreRequest;
 use App\Http\Requests\Form\UpdateRequest;
+use App\Models\Category;
 use App\Models\Document;
 use App\Pipes\FormTemplate\StoreDocument;
+use App\Pipes\FormTemplate\StoreRequirement;
 use App\Pipes\FormTemplate\UpdateDocument;
 use App\Pipes\FormTemplate\UploadDocument;
 use App\Pipes\Tags\ParseTags;
 use App\Repositories\DocumentRepository;
 use App\Repositories\OfficeRepository;
+use App\Repositories\TagRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Pipeline;
 
@@ -19,9 +22,12 @@ final class DocumentController extends Controller
 {
     private readonly OfficeRepository $officeRepository;
 
+    private readonly TagRepository $tagRepository;
+
     public function __construct(private readonly DocumentRepository $documentRepository)
     {
         $this->officeRepository = app()->make(OfficeRepository::class);
+        $this->tagRepository = app()->make(TagRepository::class);
     }
 
     /**
@@ -45,7 +51,9 @@ final class DocumentController extends Controller
     {
         return view('document.create', [
             'offices' => $this->officeRepository->get(),
+            'tags' => $this->tagRepository->get(),
             'accessLevels' => AccessType::cases(),
+            'categories' => Category::all(),
         ]);
     }
 
@@ -60,6 +68,7 @@ final class DocumentController extends Controller
                     UploadDocument::class,
                     StoreDocument::class,
                     ParseTags::class,
+                    StoreRequirement::class,
                 ])->then(fn ($data) => back()->with('success', 'Imported successfully!'));
         });
     }
@@ -77,10 +86,14 @@ final class DocumentController extends Controller
      */
     public function edit(Document $document)
     {
+
         return view('document.edit', [
-            'document' => $document,
+            'document' => $document->load('requirements'),
+            'documentTags' => $document->tags->pluck('id')->toArray(),
             'offices' => $this->officeRepository->get(),
+            'tags' => $this->tagRepository->get(),
             'accessLevels' => AccessType::cases(),
+            'categories' => Category::all(),
         ]);
     }
 
@@ -95,6 +108,7 @@ final class DocumentController extends Controller
                     UploadDocument::class,
                     UpdateDocument::class,
                     ParseTags::class,
+                    StoreRequirement::class,
                 ])->then(fn ($data) => back()->with('success', 'Imported successfully!'));
         });
     }

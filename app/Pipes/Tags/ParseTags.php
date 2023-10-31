@@ -17,18 +17,9 @@ final class ParseTags extends BasePipeHandler
 
         if (request()->method() === 'PUT') {
             $payload['model']->tags()->detach();
-            $tags = array_unique(explode(',', $payload['form']['tags']));
-            $payload['form']['tags'] = [];
-            foreach ($tags as $tag) {
-                $payload['tags'][] = $this->tagRepository->create(['name' => $tag])?->id;
-            }
-            $payload['model']->tags()->attach($payload['tags']);
+            $payload['model']->tags()->attach($payload['form']['tags']);
         } else {
-            $tags = array_unique(explode(',', $payload['tags']));
-            $payload['tags'] = [];
-            foreach ($tags as $tag) {
-                $payload['tags'][] = $this->tagRepository->create(['name' => $tag])?->id;
-            }
+            $tags = $payload['tags'];
             $payload['document']->tags()->attach($payload['tags']);
         }
 

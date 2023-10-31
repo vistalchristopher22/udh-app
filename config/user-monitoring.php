@@ -73,12 +73,12 @@ return [
          *
          * You can set true/false for monitor actions like (store, update, and ...).
          */
-        'on_store'      => true,
-        'on_update'     => true,
-        'on_destroy'    => true,
-        'on_read'       => true,
-        'on_restore'    => false, // Release for next version :)
-        'on_replicate'  => false, // Release for next version :)
+        'on_store' => true,
+        'on_update' => true,
+        'on_destroy' => true,
+        'on_read' => true,
+        'on_restore' => false, // Release for next version :)
+        'on_replicate' => false, // Release for next version :)
     ],
 
     /*

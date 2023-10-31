@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="salary_grade" class="required">Salary Grade</label>
+                    <label for="salary_grade" class="">Salary Grade</label>
                     <input id="salary_grade" type="text" name="salary_grade"
                            value="{{ old('salary_grade') }}"
                            class="form-control @error('salary_grade') is-invalid @enderror">
@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="step" class="required">Step</label>
+                    <label for="step" class="">Step</label>
                     <input id="step" type="text" name="step"
                            value="{{ old('step') }}"
                            class="form-control @error('step') is-invalid @enderror">

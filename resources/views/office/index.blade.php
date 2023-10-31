@@ -21,6 +21,9 @@
                 <thead>
                 <tr>
                     <th class="text-center h6 text-uppercase p-2 bg-light">Name</th>
+                    <th class="text-center h6 text-uppercase p-2 bg-light">Description</th>
+                    <th class="text-center h6 text-uppercase p-2 bg-light">Code</th>
+                    <th class="text-center h6 text-uppercase p-2 bg-light">Campus</th>
                     <th class="text-center h6 text-uppercase p-2 bg-light">Telephone Number</th>
                     <th class="text-center h6 text-uppercase p-2 bg-light">Phone Number</th>
                     <th class="text-center h6 text-uppercase p-2 bg-light">Email</th>
@@ -32,6 +35,9 @@
                 @foreach($offices as $office)
                     <tr>
                         <td class="text-start"><span class="ms-2"></span>{{ $office->name }}</td>
+                        <td class="text-start"><span class="mx-2"></span>{{ $office->description }}</td>
+                        <td class="text-center">{{ $office->code ?? '' }}</td>
+                        <td class="text-start text-center">{{ $office?->campus?->name }}</td>
                         <td class="text-center">{{ $office->telephone_number }}</td>
                         <td class="text-center">{{ $office->phone_number }}</td>
                         <td class="text-start"><span class="ms-2"></span>{{ $office->email }}</td>

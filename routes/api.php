@@ -7,12 +7,16 @@ use App\Models\Category;
 use App\Models\Document;
 use App\Models\Employee;
 use App\Models\Position;
+use App\Models\Requirement;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Permission;
 use App\Http\Controllers\DocumentDownloadController;
+
 
 Route::post('permission-create', function () {
     Permission::create([
@@ -28,6 +32,10 @@ Route::get('role-fetch-permissions/{id}', function (int $id) {
 });
 
 Route::get('document-download/{id}', DocumentDownloadController::class)->name('document.download');
+
+Route::get('view-requirements/{document}', function (int $document) {
+    return Requirement::where('document_id', $document)->get();
+});
 
 Route::get('profile/{id}', function (int $id) {
     return User::find($id);
@@ -63,17 +71,19 @@ Route::post('tag', function () {
             'name' => request()->name,
         ]);
     }
+
     return response()->json($tag);
 });
 
-
 Route::get('categories', function () {
     $categories = Category::orderBy('created_at', 'DESC')->paginate(10);
+
     return response()->json($categories);
 });
 
 Route::get('category/{id}', function (int $id) {
     $category = Category::find($id);
+
     return response()->json($category);
 });
 
@@ -91,17 +101,18 @@ Route::post('category', function () {
             'slug' => Str::slug(request()->name),
         ]);
     }
+
     return response()->json($category);
 });
 
 Route::delete('category', function () {
     Category::find(request()->id)->delete();
+
     return response()->json(['success' => true]);
 });
 
-
 Route::get('offices', function () {
-    return Office::get();
+    return Office::orderBy('code', 'ASC')->get();
 });
 
 Route::get('positions', function () {
@@ -118,6 +129,7 @@ Route::post('profile/personal-information', function () {
     $employee->phone_number = request()->phone_number;
     $employee->address = request()->address;
     $employee->save();
+
     return response()->json(['data' => $employee, 'success' => true]);
 });
 
@@ -125,12 +137,13 @@ Route::post('profile/account-information', function () {
     $user = User::find(request()->id);
     $employee = $user->information;
     $user->email = request()->email;
-    if(request()->has('password') && !is_null(request()->password)) {
+    if (request()->has('password') && !is_null(request()->password)) {
         $user->password = bcrypt(request()->password);
     }
     $user->save();
     $employee->email = request()->email;
     $employee->save();
+
     return response()->json(['success' => true]);
 });
 
@@ -141,4 +154,3 @@ Route::get('user-visits-activities/{id}', function ($id) {
 Route::get('user-authentications-activities/{id}', function ($id) {
     return DB::table('authentications_monitoring')->where('user_id', $id)->paginate(10);
 });
-
