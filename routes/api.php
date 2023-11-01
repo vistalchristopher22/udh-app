@@ -1,22 +1,20 @@
 <?php
 
-use App\Models\Tag;
-use App\Models\User;
-use App\Models\Office;
+use App\Http\Controllers\DocumentDownloadController;
 use App\Models\Category;
 use App\Models\Document;
 use App\Models\Employee;
+use App\Models\Office;
 use App\Models\Position;
 use App\Models\Requirement;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
+use App\Models\Tag;
+use App\Models\User;
+use App\Models\UserFile;
 use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission;
-use App\Http\Controllers\DocumentDownloadController;
-
+use Spatie\Permission\Models\Role;
 
 Route::post('permission-create', function () {
     Permission::create([
@@ -64,11 +62,11 @@ Route::delete('tag', function () {
 Route::post('tag', function () {
     if (request()->has('id') && request()->id) {
         $tag = Tag::find(request()->id);
-        $tag->name = request()->name;
+        $tag->name = Str::upper(request()->name);
         $tag->save();
     } else {
         $tag = Tag::create([
-            'name' => request()->name,
+            'name' => Str::upper(request()->name),
         ]);
     }
 
@@ -90,13 +88,13 @@ Route::get('category/{id}', function (int $id) {
 Route::post('category', function () {
     if (request()->has('id') && request()->id) {
         $category = Category::find(request()->id);
-        $category->name = request()->name;
+        $category->name = Str::upper(request()->name);
         $category->description = request()->description;
         $category->slug = Str::slug(request()->name);
         $category->save();
     } else {
         $category = Category::create([
-            'name' => request()->name,
+            'name' => Str::upper(request()->name),
             'description' => request()->description,
             'slug' => Str::slug(request()->name),
         ]);
@@ -137,7 +135,7 @@ Route::post('profile/account-information', function () {
     $user = User::find(request()->id);
     $employee = $user->information;
     $user->email = request()->email;
-    if (request()->has('password') && !is_null(request()->password)) {
+    if (request()->has('password') && ! is_null(request()->password)) {
         $user->password = bcrypt(request()->password);
     }
     $user->save();
@@ -153,4 +151,9 @@ Route::get('user-visits-activities/{id}', function ($id) {
 
 Route::get('user-authentications-activities/{id}', function ($id) {
     return DB::table('authentications_monitoring')->where('user_id', $id)->paginate(10);
+});
+
+
+Route::get('check-file-thumbnail-status/{id}', function (int $id) {
+    return UserFile::find($id, ['id', 'thumbnail']);
 });

@@ -23,17 +23,17 @@ class SetupRequest extends FormRequest
     {
         return [
             'id' => 'required|integer',
-            'email' => 'required|email|unique:users,email,' . $this->id, 
+            'email' => 'required|email|unique:users,email,'.$this->id,
             'password' => 'required|string|min:8|confirmed',
-            'employee_id' => 'required|string|unique:employees,employee_id', 
+            'employee_id' => 'required|string|unique:employees,employee_id',
             'first_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'required|string|max:255',
-            'suffix' => 'nullable|string|max:10', 
-            'phone_number' => 'required|string|max:20', 
-            'office' => 'required|integer|exists:offices,id', 
-            'address' => 'required|string|max:500', 
-            'position' => 'required|integer|exists:positions,id', 
+            'suffix' => 'nullable|string|max:10',
+            'phone_number' => 'required|string|max:20',
+            'office' => 'required|integer|exists:offices,id',
+            'address' => 'required|string|max:500',
+            'position' => 'required|integer|exists:positions,id',
             'work_status' => 'required|string|max:255',
         ];
     }

@@ -117,7 +117,7 @@ export default {
     const saveTag = (data) => {
       axios.post(`/api/tag`, data).then((response) => {
         if (response.status === 200) {
-          isDisplay.value = false;
+          data.name = null;
           notyf.success('Saved Successfully!');
           let [link] = pagination.value.links.filter((link) => link.active);
           fetch(link.url);

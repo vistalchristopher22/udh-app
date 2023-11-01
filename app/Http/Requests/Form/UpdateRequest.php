@@ -24,6 +24,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => ['required'],
+            'fiscal_year' => ['digits:4', 'numeric', 'min:1990'],
             'description' => ['required'],
             'office' => ['required', 'exists:offices,id'],
             'access_level' => ['required', 'in:'.implode(',', AccessType::all())],

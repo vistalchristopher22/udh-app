@@ -2,24 +2,23 @@
 
 use App\Http\Controllers\Auth\AccountSetupController;
 use App\Http\Controllers\Auth\GoogleSignInController;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TagController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\RoleController;
 use App\Http\Controllers\CampusController;
-use App\Http\Controllers\FolderController;
-use App\Http\Controllers\OfficeController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DocumentController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\PositionController;
-use App\Http\Controllers\UserFileController;
-use App\Http\Controllers\FileManagerController;
 use App\Http\Controllers\DocumentServiceProcessController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\ExploreController;
+use App\Http\Controllers\FileManagerController;
+use App\Http\Controllers\FolderController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OfficeController;
+use App\Http\Controllers\PositionController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\UserFileController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,7 +26,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('home', [HomeController::class, 'index'])->name('home');
+Route::get('home', [HomeController::class, 'index'])->name('home')->middleware(['auth', 'setup.account']);
+Route::get('explore', [ExploreController::class, 'index'])->name('explore.index');
 
 Route::group(['prefix' => 'document-process', 'as' => 'document-process.', 'middleware' => 'setup.account'], function () {
     Route::get('{document}', [DocumentServiceProcessController::class, 'create'])->name('create');
@@ -52,11 +52,9 @@ Route::group(['middleware' => 'setup.account'], function () {
     Route::delete('file/{file}', [UserFileController::class, 'destroy']);
 });
 
-
 Route::get('account-setup', [AccountSetupController::class, 'index'])->name('account-setup.index');
 Route::post('account-setup', [AccountSetupController::class, 'store'])->name('account-setup.store');
 Route::post('google-sign-in', GoogleSignInController::class);
-
 
 Route::group(['middleware' => 'setup.account'], function () {
     Route::resources([

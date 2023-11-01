@@ -39,6 +39,9 @@ final class DocumentController extends Controller
             'forms' => $this->documentRepository->get(),
             'availableFileTypes' => $this->documentRepository->getAvailableFileTypes(),
             'availableUploadedBy' => $this->documentRepository->getAvailableUploadedBy(),
+            'availableTags' => $this->documentRepository->getAvailableTags(),
+            'availableCategories' => $this->documentRepository->getAvailableCategories(),
+            'availableFiscalYear' => $this->documentRepository->getAvailableFiscalYear(),
             'accessLevels' => AccessType::cases(),
             'offices' => $this->officeRepository->get(),
         ]);

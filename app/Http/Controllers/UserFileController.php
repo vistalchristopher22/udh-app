@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ProcessPDFJob;
 use App\Models\Folder;
 use App\Models\UserFile;
 use Illuminate\Http\Request;
@@ -17,14 +18,9 @@ class UserFileController extends Controller
             $file = $request->file('file');
             $filename = $file->getClientOriginalName();
             $path = $file->store('public/uploadedFiles');
-
-            $fullPath = Str::replace('/', '\\', storage_path('app/'.$path));
-            shell_exec('"C:\Program Files\LibreOffice\program\soffice" --headless --convert-to pdf "'.escapeshellarg($fullPath).'" --outdir '.escapeshellarg(dirname($fullPath)));
-
-            $thumbnailPath = public_path().'\\storage\\uploadedFiles\\thumbnails\\'.basename($fullPath);
             $extension = pathinfo($filename, PATHINFO_EXTENSION);
-            $pdf = new Pdf(public_path().'\\storage\\uploadedFiles\\'.basename(str_replace($extension, 'pdf', $fullPath)));
-            $pdf->setOutputFormat('png')->saveImage(str_replace('pdf', 'png', $thumbnailPath));
+            $fullPath = Str::replace('/', '\\', storage_path('app/'.$path));
+
 
             $userFile = UserFile::create([
                 'name' => $filename,
@@ -34,10 +30,12 @@ class UserFileController extends Controller
                 'file_type' => $extension,
                 'size' => $file->getSize(),
                 'version' => '1.0',
-                'thumbnail' => '/storage/uploadedFiles/thumbnails/'.str_replace('pdf', 'png', basename($thumbnailPath)) ?? '',
                 'status' => 'active',
-                'uploaded_by' => Auth::id(),
+                'thumbnail' => '',
+                'uploaded_by' => auth()->user()->id,
             ]);
+
+            ProcessPDFJob::dispatch(file :$userFile, filePath : $fullPath)->delay(now()->addSeconds(1.5));
 
             return response()->json($userFile, 201);
         }
@@ -73,7 +71,7 @@ class UserFileController extends Controller
     public function search(Request $request)
     {
         $query = $request->get('query');
-        $files = UserFile::where('name', 'like', '%'.$query.'%')->get();
+        $files = UserFile::where('name', 'like', '%' . $query . '%')->get();
 
         return response()->json($files);
     }

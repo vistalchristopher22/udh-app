@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Account\SetupRequest;
+use App\Models\User;
 use App\Repositories\EmployeeRepository;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class AccountSetupController extends Controller
 {
-    public function __construct(private readonly EmployeeRepository $employeeRepository){}
+    public function __construct(private readonly EmployeeRepository $employeeRepository)
+    {
+    }
 
     public function index()
     {
@@ -27,23 +29,22 @@ class AccountSetupController extends Controller
 
     public function store(SetupRequest $request)
     {
-        return DB::transaction(function () use($request) {
+        return DB::transaction(function () use ($request) {
             $user = User::find(auth()->user()->id);
             $user->password = bcrypt($request->password);
             $user->is_complete = true;
             $user->save();
 
-
             $this->employeeRepository->create([
                 'email' => $request->email,
                 'employee_id' => $request->employee_id,
-                'first_name' => $request->first_name,
-                'middle_name' => $request->middle_name,
-                'last_name' => $request->last_name,
-                'suffix' => $request->suffix,
+                'first_name' => Str::upper($request->first_name),
+                'middle_name' => Str::upper($request->middle_name),
+                'last_name' => Str::upper($request->last_name),
+                'suffix' => Str::upper($request->suffix),
                 'phone_number' => $request->phone_number,
                 'office' => $request->office,
-                'address' => $request->address,
+                'address' => Str::upper($request->address),
                 'position' => $request->position,
                 'work_status' => $request->work_status,
             ]);

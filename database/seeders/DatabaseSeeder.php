@@ -15,8 +15,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Category::factory(10)->create();
-        Tag::factory(10)->create();
+        // Category::factory(10)->create();
+        // Tag::factory(10)->create();
 
         $this->call([
             CampusSeedeer::class,
@@ -24,9 +24,9 @@ class DatabaseSeeder extends Seeder
             OfficeSeeder::class,
         ]);
 
-        $user = User::factory()->create([
+        User::factory()->create([
             'email' => 'admin@example.com',
+            'is_complete' => true,
         ]);
-        User::factory(1)->create();
     }
 }

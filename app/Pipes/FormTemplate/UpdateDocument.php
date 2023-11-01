@@ -27,6 +27,7 @@ final class UpdateDocument extends BasePipeHandler
                 'version' => $payload['version'],
                 'file_content' => '',
                 'category_id' => $payload['form']['category_id'],
+                'fiscal_year' => $payload['form']['fiscal_year'],
             ]);
         } else {
             $payload['model']->update([
@@ -35,6 +36,7 @@ final class UpdateDocument extends BasePipeHandler
                 'access_level' => $payload['form']['access_level'],
                 'office_responsible' => $payload['form']['office'],
                 'category_id' => $payload['form']['category_id'],
+                'fiscal_year' => $payload['form']['fiscal_year'],
             ]);
         }
 

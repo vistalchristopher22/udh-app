@@ -25,6 +25,7 @@ class StoreRequest extends FormRequest
         return [
             'name' => ['required'],
             'description' => ['required'],
+            'fiscal_year' => ['digits:4', 'numeric', 'min:1990'],
             'office' => ['required', 'exists:offices,id'],
             'access_level' => ['required', 'in:'.implode(',', AccessType::all())],
             'file' => ['required', 'file'],

@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('file_type');
             $table->integer('size');
             $table->string('version');
+            $table->unsignedBigInteger('fiscal_year');
             $table->timestamps();
         });
     }

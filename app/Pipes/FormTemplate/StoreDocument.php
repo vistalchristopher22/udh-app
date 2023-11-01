@@ -27,6 +27,7 @@ final class StoreDocument extends BasePipeHandler
             'file_type' => $payload['file_type'],
             'version' => $payload['version'],
             'category_id' => $payload['category_id'],
+            'fiscal_year' => $payload['fiscal_year'],
         ]);
 
         $payload['document'] = $document;
